@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="row" id="jokeList"></div>
+    </div>
+    <script>
+function joke1 (){
+    fetch('https://v2.jokeapi.dev/joke/Any')
+    .then(res=>res.json())
+    .then(data=>{
+  const jokeList=document.getElementById('jokeList');
+  jokeList.innerHTML='';
+  const coll = document.createElement('div');
+  coll.className = 'col-md-4 mb-4 border border-black';
+  const card = document.createElement('div');
+  card.className = 'card';
+  const jokeText = document.createElement('p');
+  if (data.type === 'single') {
+    jokeText.innerHTML = data.joke;
+  } else {
+    jokeText.innerHTML = data.setup + '<br>' + data.delivery;
+  }
+  const btn = document.createElement('button');
+  btn.className = 'btn btn-primary mt-3';
+  btn.innerHTML = 'get another joke';
+  btn.addEventListener('click', joke1);
+  card.appendChild(jokeText);
+  card.appendChild(btn);
+  coll.appendChild(card);
+  jokeList.appendChild(coll);
+    })
+    
+}
+joke1();
+
+    </script>
+</body>
+</html>
